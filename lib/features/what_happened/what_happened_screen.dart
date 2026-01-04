@@ -7,6 +7,7 @@ import 'package:what_could_be_next/features/what_happened/what_happened_state.da
 import 'package:what_could_be_next/model/animal.dart';
 import 'package:what_could_be_next/model/type_enums.dart';
 import 'package:what_could_be_next/ui/components.dart';
+import 'package:what_could_be_next/utils/nav_extensions.dart';
 
 class WhatHappenedScreen extends ConsumerWidget {
   const WhatHappenedScreen({super.key});
@@ -15,6 +16,17 @@ class WhatHappenedScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(whatHappenedControllerProvider);
     final controller = ref.read(whatHappenedControllerProvider.notifier);
+
+    ref.listen(whatHappenedControllerProvider, (previous, next) {
+      final event = next.uiEvent;
+      if (event == null) return;
+
+      switch (event) {
+        case WhatHappenedUiEvent.success:
+          context.goBack();
+          break;
+      }
+    });
 
     return Scaffold(
       body: Container(

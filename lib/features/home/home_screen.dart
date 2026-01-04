@@ -30,18 +30,26 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 16),
-                _buildGuessesSection(context, animalState),
-                const SizedBox(height: 24),
-                _buildItemsListHeader(context, animalState),
-                const SizedBox(height: 12),
-                _buildItemsList(context, animalState),
-              ],
-            ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildHeader(context),
+                      const SizedBox(height: 16),
+                      _buildGuessesSection(context, animalState),
+                      const SizedBox(height: 24),
+                      _buildItemsListHeader(context, ref, animalState),
+                      const SizedBox(height: 12),
+                      _buildItemsList(context, animalState),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -244,6 +252,7 @@ class HomeScreen extends ConsumerWidget {
 
   Widget _buildItemsListHeader(
     BuildContext context,
+    WidgetRef ref,
     AnimalControllerState animalState,
   ) {
     return Padding(
@@ -268,7 +277,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           if (animalState.items.isNotEmpty)
             GestureDetector(
-              onTap: () => _showClearDialog(context),
+              onTap: () => _showClearDialog(context, ref),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -395,7 +404,7 @@ class HomeScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.animal?.type.asFullName() ?? 'Unknown',
+                          '${item.animal?.type.asFullName() ?? "Unknown"} ${item.animal!.variant}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -404,21 +413,11 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         if (item.animal?.variant != null)
                           Text(
-                            'Variant ${item.animal!.variant}',
+                            item.animal!.description ?? "",
                             style: const TextStyle(
                               color: Colors.white70,
-                              fontSize: 12,
+                              fontSize: 16,
                             ),
-                          ),
-                        if (item.animal?.description != null)
-                          Text(
-                            item.animal!.description!,
-                            style: const TextStyle(
-                              color: Colors.white60,
-                              fontSize: 11,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
                       ],
                     ),
@@ -460,7 +459,7 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  void _showClearDialog(BuildContext context) {
+  void _showClearDialog(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
       builder:
@@ -484,6 +483,7 @@ class HomeScreen extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () {
+                  ref.read(animalControllerProvider.notifier).clear();
                   Navigator.pop(context);
                 },
                 child: Text(

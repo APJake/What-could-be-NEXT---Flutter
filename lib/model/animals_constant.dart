@@ -4,6 +4,11 @@ import 'package:what_could_be_next/model/type_enums.dart';
 class AnimalsConstant {
   AnimalsConstant._();
 
+  static List<Animal> getNeighbours(AnimalType type, int variant) {
+    return animalVariants[type]?.firstWhere((e) => e[1].variant == variant) ??
+        [];
+  }
+
   static final animalVariants = {
     AnimalType.panda: pandaVariants,
     AnimalType.tiger: tigerVariants,

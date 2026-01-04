@@ -26,13 +26,19 @@ class WhatHappenedController extends StateNotifier<WhatHappenedState> {
   }
 
   void skipStep2() {
-    // Skip to completion or reset
-    reset();
+    completeFlow();
   }
 
   void selectVariant(AnimalType animal, int variant) {
+    final neighbours = AnimalsConstant.getNeighbours(animal, variant);
+    final descriptionText = neighbours.map((e) => e.type.asLetter()).join(" ");
+
     state = state.copyWith(
-      selectedVariant: Animal(type: animal, variant: variant),
+      selectedVariant: Animal(
+        type: animal,
+        variant: variant,
+        description: descriptionText,
+      ),
     );
 
     completeFlow();
@@ -60,6 +66,10 @@ class WhatHappenedController extends StateNotifier<WhatHappenedState> {
   }
 
   void reset() {
+    state = WhatHappenedState(uiEvent: WhatHappenedUiEvent.success);
+  }
+
+  void consumeUiEvent() {
     state = WhatHappenedState();
   }
 

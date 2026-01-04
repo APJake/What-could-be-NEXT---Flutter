@@ -1,12 +1,15 @@
 import 'package:what_could_be_next/model/animal.dart';
 import 'package:what_could_be_next/model/type_enums.dart';
 
+enum WhatHappenedUiEvent { success }
+
 class WhatHappenedState {
   final int currentStep;
   final AnimalColor? selectedColor;
   final AnimalType? selectedAnimal;
   final Animal? selectedVariant;
   final List<List<Animal>> animalVariants;
+  final WhatHappenedUiEvent? uiEvent;
 
   WhatHappenedState({
     this.currentStep = 1,
@@ -14,6 +17,7 @@ class WhatHappenedState {
     this.selectedAnimal,
     this.selectedVariant,
     this.animalVariants = const [],
+    this.uiEvent,
   });
 
   WhatHappenedState copyWith({
@@ -22,6 +26,7 @@ class WhatHappenedState {
     AnimalType? selectedAnimal,
     Animal? selectedVariant,
     List<List<Animal>>? animalVariants,
+    WhatHappenedUiEvent? uiEvent,
   }) {
     return WhatHappenedState(
       currentStep: currentStep ?? this.currentStep,
@@ -29,6 +34,7 @@ class WhatHappenedState {
       selectedAnimal: selectedAnimal ?? this.selectedAnimal,
       selectedVariant: selectedVariant ?? this.selectedVariant,
       animalVariants: animalVariants ?? this.animalVariants,
+      uiEvent: uiEvent ?? this.uiEvent,
     );
   }
 
