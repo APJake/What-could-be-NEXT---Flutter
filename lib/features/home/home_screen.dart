@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:what_could_be_next/controller/animal_controller.dart';
-import 'package:what_could_be_next/di/riverpod_providers.dart';
 import 'package:what_could_be_next/model/animal_guess.dart';
 import 'package:what_could_be_next/model/animal_item.dart';
 import 'package:what_could_be_next/ui/components.dart';

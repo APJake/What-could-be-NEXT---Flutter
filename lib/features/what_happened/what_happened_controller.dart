@@ -68,15 +68,11 @@ class WhatHappenedController extends _$WhatHappenedController {
     );
     _animalController.addItem(animalItem);
 
-    reset();
+    onSuccess();
   }
 
-  void reset() {
+  void onSuccess() {
     state = WhatHappenedState(uiEvent: WhatHappenedUiEvent.success);
-  }
-
-  void consumeUiEvent() {
-    state = WhatHappenedState();
   }
 
   void goBack() {
