@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:what_could_be_next/di/riverpod_providers.dart';
 import 'package:what_could_be_next/features/what_happened/components/step1_widget.dart';
 import 'package:what_could_be_next/features/what_happened/components/step2_widget.dart';
 import 'package:what_could_be_next/features/what_happened/components/step3_widget.dart';

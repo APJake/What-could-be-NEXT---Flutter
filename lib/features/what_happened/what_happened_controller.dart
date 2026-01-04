@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:what_could_be_next/controller/animal_controller.dart';
 import 'package:what_could_be_next/di/app_dependency.dart';
 import 'package:what_could_be_next/features/what_happened/what_happened_state.dart';
@@ -7,9 +7,17 @@ import 'package:what_could_be_next/model/animal_item.dart';
 import 'package:what_could_be_next/model/animals_constant.dart';
 import 'package:what_could_be_next/model/type_enums.dart';
 
-class WhatHappenedController extends StateNotifier<WhatHappenedState> {
-  final AnimalController _animalController;
-  WhatHappenedController(this._animalController) : super(WhatHappenedState());
+part 'what_happened_controller.g.dart';
+
+@riverpod
+class WhatHappenedController extends _$WhatHappenedController {
+  late final AnimalController _animalController;
+
+  @override
+  WhatHappenedState build() {
+    _animalController = ref.read(animalControllerProvider.notifier);
+    return WhatHappenedState();
+  }
 
   void selectColor(AnimalColor color) {
     state = state.copyWith(selectedColor: color, currentStep: 2);
@@ -49,8 +57,6 @@ class WhatHappenedController extends StateNotifier<WhatHappenedState> {
   }
 
   void completeFlow() {
-    // Here you can handle the completion logic
-    // For now, we'll just reset
     logger.d('Flow completed!');
     logger.d('Color: ${state.selectedColor}');
     logger.d('Animal: ${state.selectedAnimal}');
