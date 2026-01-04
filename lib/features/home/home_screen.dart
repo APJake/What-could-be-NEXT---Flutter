@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:what_could_be_next/controller/animal_controller.dart';
 import 'package:what_could_be_next/model/animal_guess.dart';
 import 'package:what_could_be_next/model/animal_item.dart';
@@ -43,7 +44,11 @@ class HomeScreen extends ConsumerWidget {
                       const SizedBox(height: 24),
                       _buildItemsListHeader(context, ref, animalState),
                       const SizedBox(height: 12),
-                      _buildItemsList(context, animalState),
+                      _buildItemsList(context, animalState, (int index) {
+                        ref
+                            .read(animalControllerProvider.notifier)
+                            .deleteAt(index);
+                      }),
                     ],
                   ),
                 ),
@@ -308,6 +313,7 @@ class HomeScreen extends ConsumerWidget {
   Widget _buildItemsList(
     BuildContext context,
     AnimalControllerState animalState,
+    Function(int index) onDelete,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -321,7 +327,26 @@ class HomeScreen extends ConsumerWidget {
                 separatorBuilder: (context, index) => const SizedBox(height: 8),
                 itemBuilder: (context, index) {
                   final item = animalState.items[index];
-                  return _buildItemCard(context, item);
+                  return Slidable(
+                    endActionPane: ActionPane(
+                      extentRatio: 0.25,
+                      motion: const DrawerMotion(),
+                      children: [
+                        SlidableAction(
+                          //key: ValueKey(index),
+                          onPressed: (context) {
+                            onDelete(index);
+                          },
+                          borderRadius: BorderRadius.circular(12),
+                          backgroundColor: Colors.red.withAlpha(60),
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Delete',
+                        ),
+                      ],
+                    ),
+                    child: _buildItemCard(context, item),
+                  );
                 },
               ),
     );

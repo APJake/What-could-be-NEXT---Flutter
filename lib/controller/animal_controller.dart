@@ -53,11 +53,14 @@ class AnimalController extends _$AnimalController {
 
   void addItem(AnimalItem item) {
     _box.add(item);
-    state = state.copyWith(items: [...state.items, item]);
   }
 
   void clear() {
     _box.clear();
-    state = state.copyWith(items: []);
+  }
+
+  void deleteAt(int index) {
+    final reversedIndex = state.items.length - 1 - index;
+    _box.deleteAt(reversedIndex);
   }
 }
