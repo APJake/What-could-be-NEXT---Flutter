@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:what_could_be_next/di/riverpod_providers.dart';
-import 'package:what_could_be_next/features/what_happened/step1_widget.dart';
-import 'package:what_could_be_next/features/what_happened/step2_widget.dart';
-import 'package:what_could_be_next/features/what_happened/step3_widget.dart';
+import 'package:what_could_be_next/features/what_happened/components/step1_widget.dart';
+import 'package:what_could_be_next/features/what_happened/components/step2_widget.dart';
+import 'package:what_could_be_next/features/what_happened/components/step3_widget.dart';
 import 'package:what_could_be_next/features/what_happened/what_happened_controller.dart';
 import 'package:what_could_be_next/features/what_happened/what_happened_state.dart';
 import 'package:what_could_be_next/ui/components.dart';

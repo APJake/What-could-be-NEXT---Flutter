@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:what_could_be_next/features/what_happened/ui_components.dart';
+import 'package:what_could_be_next/features/what_happened/components/ui_components.dart';
 import 'package:what_could_be_next/features/what_happened/what_happened_controller.dart';
 import 'package:what_could_be_next/model/animal.dart';
 import 'package:what_could_be_next/model/type_enums.dart';
